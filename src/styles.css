@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+  
+body { margin: 0; 
+    font-family: Roboto, 
+    "Helvetica Neue", sans-serif; 
+    background-color: #eeeeee;
+    color: #393e46;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5em;
+}
+
+.container {
+    width: 95%;
+    margin: 0 auto;
+}
+
+/* https://colorhunt.co/palette/196224 */

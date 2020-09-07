@@ -1,0 +1,46 @@
+<!-- search-->
+
+<div class="dialog-header">
+  <h1 mat-dialog-title></h1>
+  <mat-form-field class="search-input">
+    <mat-label>Search for food</mat-label>
+    <input matInput #searchTerm (keyup.enter)="searchFood(searchTerm.value)" (blur)="searchFood(searchTerm.value)" />
+  </mat-form-field>
+</div>
+
+<form #foodForm="ngForm" mat-dialog-content>
+  <mat-list *ngIf="queryResults">
+    <mat-list-item *ngFor="let query of queryResults.hints" class="list-item">
+      <img *ngIf="query.food.image" src="{{query.food.image}}" class="list-image" matListIcon />
+      <div matLine>
+        <h2>{{ query.food.label | titlecase }}</h2>
+        <p>{{ query.food.nutrients.ENERC_KCAL | number:'1.0-0'}}kcal per 100 g</p>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label for="quantity">Choose amount</mat-label>
+          <input #quantity="ngModel" required ngModel name="quantity" min="1" matInput class="quantity" type="number">
+        </mat-form-field>
+      </div>
+      <mat-action-list>
+        <mat-form-field appearance="fill" matLine>
+          <mat-label for="measure">Choose measure</mat-label>
+          <mat-select #measure="ngModel" required ngModel name="measure" id="measure" required>
+            <mat-option *ngFor="let measure of query.measures" [value]="measure.uri">
+              {{ measure.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-action-list>
+      <button mat-mini-fab color="accent" type="submit" (click)="chooseItem(query, measure.value, quantity.value);"> <!-- chooseItem(query, measure.value) -->
+        <mat-icon>add</mat-icon>
+      </button>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+</form>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Back</button>
+  <button mat-button cdkFocusInitial (click)="searchFood(searchTerm.value)">Search</button>
+</div>

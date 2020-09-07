@@ -1,0 +1,17 @@
+.mat-form-field + .mat-form-field {
+    margin-left: 8px;
+}
+
+section {
+    justify-content: center;
+    margin-top: 5em;
+}
+
+app-calculate-meals {
+    flex-grow: 2;    
+    margin: 0 2em;
+}
+app-nutrition-info {
+    flex-grow: 1;
+    margin: 0 2em;
+}
