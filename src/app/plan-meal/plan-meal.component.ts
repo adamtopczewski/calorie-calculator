@@ -6,8 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./plan-meal.component.css']
 })
 export class PlanMealComponent implements OnInit {
-
-  panelOpenState = false;
   constructor() { }
 
   ngOnInit(): void {

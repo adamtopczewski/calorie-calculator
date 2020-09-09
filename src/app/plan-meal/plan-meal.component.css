@@ -8,10 +8,12 @@ section {
 }
 
 app-calculate-meals {
-    flex-grow: 2;    
+    flex-grow: 3;    
     margin: 0 2em;
 }
 app-nutrition-info {
-    flex-grow: 1;
+    flex-grow: 2.5;
     margin: 0 2em;
+    align-self: flex-start;
+    text-align: center;
 }
