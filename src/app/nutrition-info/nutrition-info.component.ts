@@ -7,10 +7,10 @@ import { MealsService } from '../meals.service';
   styleUrls: ['./nutrition-info.component.css'],
 })
 export class NutritionInfoComponent implements OnInit {
-  totalCalories = 0;
-  sugar = 0;
-  protein = 0;
-  fat = 0;
+  totalCalories;
+  sugar;
+  protein;
+  fat;
 
   constructor(private meals: MealsService) {}
 
@@ -19,7 +19,7 @@ export class NutritionInfoComponent implements OnInit {
   }
 
   getdata(): void {
-    this.meals.nutrienInfo.subscribe((val) => {
+    this.meals.nutrienDataSource.subscribe((val) => {
       this.sugar = val.sugar;
       this.protein = val.protein;
       this.fat = val.fat;

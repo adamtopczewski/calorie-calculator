@@ -1,7 +1,7 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { FoodDbService } from './food-db.service';
 import { meals } from './meals';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +18,10 @@ export class MealsService {
     },
   ];
 
-  @Output() nutrienInfo = new EventEmitter();
+  nutrienDataSource = new BehaviorSubject(this.getNutr());
 
   constructor(private foodDb: FoodDbService) {
+    this.getData();
     this.foodDb.foodItem.subscribe((value) => {
       this.totalNutrients.push(value.nutrients.totalNutrients);
       this.meals.forEach((element) => {
@@ -58,12 +59,13 @@ export class MealsService {
     };
   }
 
-  getData(): void {
-    this.nutrienInfo.emit(this.getNutr());
+  getData() {
+    this.nutrienDataSource.next(this.getNutr());
+    console.log(this.nutrienDataSource.value);
+    console.log(this.meals);
   }
 
   save(): void {
-    // this.meals this.totalNutrients
-    console.log('saving data TBD');
+    console.log(localStorage);
   }
 }
