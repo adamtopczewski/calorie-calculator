@@ -1,1 +1,90 @@
-<section></section>
+<section>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Profile</mat-card-title>
+      <mat-card-subtitle
+        >Here based on your input we can calculate daily calorie
+        intake</mat-card-subtitle
+      >
+    </mat-card-header>
+
+    <mat-card-content>
+      <form
+        [formGroup]="profileForm"
+        (ngSubmit)="onSubmit()"
+        class="form"
+        align="center"
+      >
+        <mat-form-field appearance="fill">
+          <mat-label>Age</mat-label>
+          <input
+            matInput
+            type="number"
+            min="1"
+            autofocus
+            formControlName="age"
+          />
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="fill">
+          <mat-label>Gender</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option value="male">Male</mat-option>
+            <mat-option value="female">Female</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="fill">
+          <mat-label>Height</mat-label>
+          <input matInput type="number" min="1" formControlName="height" />
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="fill">
+          <mat-label>Weight</mat-label>
+          <input matInput type="number" min="1" formControlName="wieght" />
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="fill">
+          <mat-label>Activity</mat-label>
+          <mat-select formControlName="activity">
+            <mat-option value="1">Basal Metabolic Rate (BMR)</mat-option>
+            <mat-option value="1.2"
+              >Sedentary: little or no exercise</mat-option
+            >
+            <mat-option value="1.375"
+              >Light: exercise 1-3 times/week</mat-option
+            >
+            <mat-option value="1.465"
+              >Moderate: exercise 4-5 times/week</mat-option
+            >
+            <mat-option value="1.55"
+              >Active: daily exercise or intense exercise 3-4
+              times/week</mat-option
+            >
+            <mat-option value="1.725"
+              >Very Active: intense exercise 6-7 times/week</mat-option
+            >
+            <mat-option value="1.9"
+              >Extra Active: very intense exercise daily, or physical
+              job</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <br />
+        <button mat-button type="submit">Submit</button>
+        <button mat-button type="save">Save</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <div class="calorie-intake">
+      <h2 *ngIf="caloriesIntake > 0">
+        You need <strong>{{ caloriesIntake | number: "1.0-0" }}</strong> kcal per day
+      </h2>
+      <h2 *ngIf="caloriesIntake <= 0">
+        Provide information to the form, so we can calculate your daily calorie
+        intake.
+      </h2>
+    </div>
+  </mat-card>
+</section>
