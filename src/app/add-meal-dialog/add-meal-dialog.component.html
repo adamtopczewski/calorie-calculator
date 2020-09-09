@@ -4,7 +4,7 @@
   <h1 mat-dialog-title></h1>
   <mat-form-field class="search-input">
     <mat-label>Search for food</mat-label>
-    <input matInput #searchTerm (keyup.enter)="searchFood(searchTerm.value)" (blur)="searchFood(searchTerm.value)" />
+    <input matInput #searchTerm (keyup.enter)="searchFood(searchTerm.value); searchTerm.value = ''" />
   </mat-form-field>
 </div>
 
@@ -32,7 +32,9 @@
           </mat-select>
         </mat-form-field>
       </mat-action-list>
-      <button mat-mini-fab color="accent" type="submit" (click)="chooseItem(query, measure.value, quantity.value);"> <!-- chooseItem(query, measure.value) -->
+      <button mat-mini-fab color="accent" type="submit"
+        (click)="chooseItem(query, measure.value, quantity.value, mealId);">
+        <!-- chooseItem(query, measure.value) -->
         <mat-icon>add</mat-icon>
       </button>
       <mat-divider></mat-divider>
@@ -42,5 +44,5 @@
 
 <div mat-dialog-actions align="end">
   <button mat-button (click)="onNoClick()">Back</button>
-  <button mat-button cdkFocusInitial (click)="searchFood(searchTerm.value)">Search</button>
+  <button mat-button (click)="searchFood(searchTerm.value); searchTerm.value = ''">Search</button>
 </div>

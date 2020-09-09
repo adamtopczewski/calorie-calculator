@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddMealDialogComponent } from '../add-meal-dialog/add-meal-dialog.component';
 import { FoodDbService } from '../food-db.service';
-import { meals } from '../meals';
+// import { meals } from '../meals';
+import { MealsService } from '../meals.service';
 
 
 @Component({
@@ -11,16 +12,16 @@ import { meals } from '../meals';
   styleUrls: ['./calculate-meals.component.css']
 })
 export class CalculateMealsComponent implements OnInit {
-  itemsArr = [];
   meals;
 
   constructor(
     public dialog : MatDialog,
-    public foodDb: FoodDbService
+    public foodDb: FoodDbService,
+    public mealsService: MealsService
   ) { }
 
   ngOnInit(): void {
-    this.meals = meals
+    this.meals = this.mealsService.meals
   }  
 
   openDialog(id): void {
@@ -28,16 +29,10 @@ export class CalculateMealsComponent implements OnInit {
     this.dialog.open(AddMealDialogComponent, {
       data: id
     });
-
-    dialogRef.componentInstance.foodObject.subscribe(value => {
-      this.meals.forEach(element => {
-        if(element.mealId == value.mealId){
-          element.items.push(value);
-          element.totalCal += value.nutrients.calories
-        }
-      });
-    });
-
     dialogRef.afterClosed().subscribe()
+  }
+
+  save():void {
+    this.mealsService.save();
   }
 }

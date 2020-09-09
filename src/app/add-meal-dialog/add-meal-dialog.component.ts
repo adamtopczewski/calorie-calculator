@@ -14,7 +14,6 @@ export interface DialogData {
 
 export class AddMealDialogComponent implements OnInit {
   queryResults: any;
-  @Output() foodObject= new EventEmitter;
   mealId;
 
   constructor(
@@ -27,32 +26,16 @@ export class AddMealDialogComponent implements OnInit {
     this.mealId = this.data
   }
 
-  addNewItem(food, quantity, nutrients) {
-    let combined = {
-      food: food.food,
-      quantity: quantity,
-      nutrients: nutrients,
-      mealId: this.mealId
-    }
-    this.foodObject.emit(combined)
-  }
-  
-  searchFood(query:string): void{
-    this.foodDb.searchFood(query).subscribe( results => this.queryResults = results)
-  }
-
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  chooseItem(query, measure, quantity): void {
-    let id = query.food.foodId
-    this.foodDb.chooseFood(measure, id, quantity).subscribe(nutrients => {
-      this.addNewItem(query, quantity, nutrients);
-    })
+  searchFood(query:string): void{
+    this.foodDb.searchFood(query).subscribe( results => this.queryResults = results)
   }
 
-  logIt(...items): void {
-    console.log(items)
+  chooseItem(query, measure, quantity, mealId): void {
+    let id = query.food.foodId
+    this.foodDb.chooseFood(query, measure, id, quantity, mealId).subscribe()
   }
 }
