@@ -1,19 +1,19 @@
 .list-image {
-    max-width: 50px;
-    height: 50px;
-    margin-right: 1em;
+  max-width: 50px;
+  height: 50px;
+  margin-right: 1em;
 }
 
 .mat-form-field {
-    margin: 1em 2em;
+  margin: 1em 2em;
 }
 
 .search-input {
-    display: block;
-    margin: auto;
-    width: 80%;
+  display: block;
+  margin: auto;
+  width: 80%;
 }
 
 .dialog-header {
-    width: 100%;
+  width: 100%;
 }

@@ -24,7 +24,7 @@ import { AddMealDialogComponent } from './add-meal-dialog/add-meal-dialog.compon
     PlanMealComponent,
     NutritionInfoComponent,
     CalculateMealsComponent,
-    AddMealDialogComponent
+    AddMealDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,12 +32,10 @@ import { AddMealDialogComponent } from './add-meal-dialog/add-meal-dialog.compon
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
   ],
   providers: [],
-  entryComponents: [
-    AddMealDialogComponent
-  ],
-  bootstrap: [AppComponent]
+  entryComponents: [AddMealDialogComponent],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -5,34 +5,32 @@ import { FoodDbService } from '../food-db.service';
 // import { meals } from '../meals';
 import { MealsService } from '../meals.service';
 
-
 @Component({
   selector: 'app-calculate-meals',
   templateUrl: './calculate-meals.component.html',
-  styleUrls: ['./calculate-meals.component.css']
+  styleUrls: ['./calculate-meals.component.css'],
 })
 export class CalculateMealsComponent implements OnInit {
   meals;
 
   constructor(
-    public dialog : MatDialog,
+    public dialog: MatDialog,
     public foodDb: FoodDbService,
     public mealsService: MealsService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.meals = this.mealsService.meals
-  }  
-
-  openDialog(id): void {
-    const dialogRef = 
-    this.dialog.open(AddMealDialogComponent, {
-      data: id
-    });
-    dialogRef.afterClosed().subscribe()
+    this.meals = this.mealsService.meals;
   }
 
-  save():void {
+  openDialog(id): void {
+    const dialogRef = this.dialog.open(AddMealDialogComponent, {
+      data: id,
+    });
+    dialogRef.afterClosed().subscribe();
+  }
+
+  save(): void {
     this.mealsService.save();
   }
 }

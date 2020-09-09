@@ -1,30 +1,32 @@
-export const meals = [{
+export const meals = [
+  {
     title: 'Breakfast',
     mealId: 1,
     totalCal: null,
-    items: []
-},
-{
+    items: [],
+  },
+  {
     title: 'II Brekfast',
     mealId: 2,
     totalCal: null,
-    items: []
-},
-{
+    items: [],
+  },
+  {
     title: 'Lunch',
     mealId: 3,
     totalCal: null,
-    items: []
-},
-{
+    items: [],
+  },
+  {
     title: 'Dinner',
     mealId: 4,
     totalCal: null,
-    items: []
-},
-{
+    items: [],
+  },
+  {
     title: 'Supper',
     mealId: 5,
     totalCal: null,
-    items: []
-}];
+    items: [],
+  },
+];

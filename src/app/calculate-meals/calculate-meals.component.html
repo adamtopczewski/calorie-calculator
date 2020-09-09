@@ -1,35 +1,44 @@
 <mat-card>
-  <mat-card-title>
-  </mat-card-title>
-    <mat-card-content>
-        <mat-accordion multi>
-            <mat-expansion-panel *ngFor="let meal of meals">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        {{meal.title}}
-                    </mat-panel-title>
-                    <mat-panel-description *ngIf="meal.totalCal">
-                        {{ meal.totalCal | number:'1.0-0' }} kcal
-                      </mat-panel-description>
-                </mat-expansion-panel-header > 
-                        <mat-list *ngIf="meal.items">
-                            <mat-list-item *ngFor="let item of meal.items" class="list-item">
-                              <img *ngIf="item.food.image" src="{{item.food.image}}" class="list-image" matListIcon />
-                                <h2 matLine>{{ item.food.label | titlecase }}</h2>
-                                <p matLine>x {{ item.quantity }}</p>
-                                <p>{{ item.nutrients.calories | number:'1.0-0'}} kcal in {{ item.nutrients.totalWeight | number:'1.0-0'}} grams.</p>
-                              <mat-divider></mat-divider>
-                            </mat-list-item>
-                          </mat-list>
-                <mat-action-row>                    
-
-                    <button mat-button (click)="openDialog(meal.mealId)" (clickedFood)="addItem($event)">Add food<mat-icon>add</mat-icon></button>
-                  </mat-action-row>
-            </mat-expansion-panel>
-        </mat-accordion>
+  <mat-card-title> </mat-card-title>
+  <mat-card-content>
+    <mat-accordion multi>
+      <mat-expansion-panel *ngFor="let meal of meals">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ meal.title }}
+          </mat-panel-title>
+          <mat-panel-description *ngIf="meal.totalCal">
+            {{ meal.totalCal | number: "1.0-0" }} kcal
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-list *ngIf="meal.items">
+          <mat-list-item *ngFor="let item of meal.items" class="list-item">
+            <img
+              *ngIf="item.food.image"
+              src="{{ item.food.image }}"
+              class="list-image"
+              matListIcon
+            />
+            <h2 matLine>{{ item.food.label | titlecase }}</h2>
+            <p matLine>x {{ item.quantity }}</p>
+            <p>
+              {{ item.nutrients.calories | number: "1.0-0" }} kcal in
+              {{ item.nutrients.totalWeight | number: "1.0-0" }} grams.
+            </p>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-list>
         <mat-action-row>
-          <button mat-button (click)="save()">Save day<mat-icon>save</mat-icon></button>
+          <button mat-button (click)="openDialog(meal.mealId)">
+            Add food<mat-icon>add</mat-icon>
+          </button>
         </mat-action-row>
-
-    </mat-card-content>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <mat-action-row>
+      <button mat-button (click)="save()">
+        Save day<mat-icon>save</mat-icon>
+      </button>
+    </mat-action-row>
+  </mat-card-content>
 </mat-card>
