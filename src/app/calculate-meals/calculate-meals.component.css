@@ -7,3 +7,16 @@ li {
 li img {
   max-width: 50px;
 }
+
+mat-panel-title {
+  color: var(--main-txt-color);
+  font-weight: 550;
+}
+
+button {
+  color: var(--accent-color);
+}
+
+.save-btn {
+  color: var(--main-txt-color);
+}

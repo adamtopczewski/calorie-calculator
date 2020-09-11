@@ -1,16 +1,18 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { environment } from '../environments/environment';
-import { query } from '@angular/animations';
+import { Observable, Subject } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class FoodDbService {
   private mealId;
-  @Output() foodItem: EventEmitter<any> = new EventEmitter();
+  // @Output() foodItem: EventEmitter<any> = new EventEmitter();
+  private foodItemSource = new Subject<any>();
+  public foodItem = this.foodItemSource.asObservable();
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -55,13 +57,18 @@ export class FoodDbService {
       );
   }
 
-  addFood(food, quantity, nutrients): void {
+  addFood(food, quantity, nutrients) {
     let data = {
-      food: food.food,
+      foodName: food.food.label,
+      foodImage: food.food.image,
       quantity: quantity,
-      nutrients: nutrients,
+      calories: nutrients.calories,
+      nutrients: nutrients.totalNutrients,
+      weight: nutrients.totalWeight,
       mealId: this.mealId,
     };
-    this.foodItem.emit(data);
+    console.log(data)
+    // this.foodItem.emit(data);
+    this.foodItemSource.next(data)
   }
 }

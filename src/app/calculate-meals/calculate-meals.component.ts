@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddMealDialogComponent } from '../add-meal-dialog/add-meal-dialog.component';
-import { FoodDbService } from '../food-db.service';
+import { FoodDbService } from '../services/food-db.service';
 // import { meals } from '../meals';
-import { MealsService } from '../meals.service';
+import { MealsService } from '../services/meals.service';
+import { LocalstorageCrudService } from '../services/localstorage-crud.service';
 
 @Component({
   selector: 'app-calculate-meals',
@@ -16,7 +17,8 @@ export class CalculateMealsComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public foodDb: FoodDbService,
-    public mealsService: MealsService
+    public mealsService: MealsService,
+    public localStorage: LocalstorageCrudService
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +33,6 @@ export class CalculateMealsComponent implements OnInit {
   }
 
   save(): void {
-    this.mealsService.save();
+    this.localStorage.update(this.meals);
   }
 }

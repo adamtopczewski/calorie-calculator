@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms'
-import { getLocalePluralCase } from '@angular/common';
+import { CaloriesCalcService } from '../../services/calories-calc.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,29 +16,15 @@ export class ProfileComponent implements OnInit {
     wieght: new FormControl(''),
     activity: new FormControl('')
   })
-  constructor() {}
+  constructor(private calculate: CaloriesCalcService) {}
 
   ngOnInit(): void {
-
+    this.calculate.caloriesIntake.subscribe(val => this.caloriesIntake = +val)
   }
 
   onSubmit(){
-    this.calculateDaily(this.profileForm.value)
     this.profileForm.setValue(this.profileForm.value)
-    console.log(this.profileForm)
+    this.calculate.calculateDailyIntake(this.profileForm.value)
   }
 
-  calculateDaily(formValues){
-    const W = +formValues.wieght
-    const H = +formValues.height
-    const A = +formValues.age
-    let BMR;
-
-    if(formValues.gender == "male"){
-      BMR = 10*W + 6.25 * H - 5 * A + 5
-    } else {
-      BMR = 10*W + 6.25 * H - 5 * A - 161
-    }
-    this.caloriesIntake = BMR * +formValues.activity
-  }
 }

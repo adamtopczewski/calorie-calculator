@@ -1,12 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+  --main-bg-color: #f6f5f5;;
+  --main-txt-color: #00334e;
+  --sec-txt-color: #145374;
+  --accent-color: #ee6f57;
+}
+
 html, body { height: 100%; }
-  
-body { margin: 0; 
-    font-family: Roboto, 
-    "Helvetica Neue", sans-serif; 
-    background-color: #eeeeee;
-    color: #393e46;
+
+body { margin: 0;
+    font-family: Roboto,
+    "Helvetica Neue", sans-serif;
+    background-color: var(--main-bg-color);
+    color: var(--sec-txt-color);
+}
+
+h2,
+h3,
+p {
+  color: var(--main-txt-color);
 }
 
 section {
@@ -21,4 +34,4 @@ section {
     margin: 0 auto;
 }
 
-/* https://colorhunt.co/palette/196224 */
+/* https://colorhunt.co/palette/201897 */

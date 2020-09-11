@@ -1,0 +1,28 @@
+.mat-card {
+  align-self: start;
+  width: 50%;
+  margin: 0 3em;
+}
+
+
+.calorie-intake {
+  margin: 2em auto;
+  text-align: center;
+  align-items: center;
+}
+
+.calorie-intake h2 {
+  color: var(--accent-color);
+}
+
+.mat-card-title {
+  color: var(--main-txt-color);
+  margin-top: 1em;
+}
+.mat-card-subtitle {
+  color: var(--sec-txt-color);
+}
+
+button {
+  color: var(--main-txt-color);
+}

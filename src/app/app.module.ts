@@ -10,12 +10,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 //Components
 import { AppComponent } from './app.component';
-import { ProfileComponent } from './profile/profile.component';
-import { SummaryComponent } from './summary/summary.component';
-import { PlanMealComponent } from './plan-meal/plan-meal.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { SummaryComponent } from './pages/summary/summary.component';
+import { PlanMealComponent } from './pages/plan-meal/plan-meal.component';
 import { NutritionInfoComponent } from './nutrition-info/nutrition-info.component';
 import { CalculateMealsComponent } from './calculate-meals/calculate-meals.component';
 import { AddMealDialogComponent } from './add-meal-dialog/add-meal-dialog.component';
+//Services
+import { LocalstorageCrudService } from './services/localstorage-crud.service'
 
 @NgModule({
   declarations: [
@@ -36,7 +38,7 @@ import { AddMealDialogComponent } from './add-meal-dialog/add-meal-dialog.compon
     BrowserAnimationsModule,
     AngularMaterialModule,
   ],
-  providers: [],
+  providers: [ LocalstorageCrudService ],
   entryComponents: [AddMealDialogComponent],
   bootstrap: [AppComponent],
 })

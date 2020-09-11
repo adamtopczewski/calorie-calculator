@@ -14,16 +14,16 @@
         <mat-list *ngIf="meal.items">
           <mat-list-item *ngFor="let item of meal.items" class="list-item">
             <img
-              *ngIf="item.food.image"
-              src="{{ item.food.image }}"
+              *ngIf="item.foodImage"
+              src="{{ item.foodImage }}"
               class="list-image"
               matListIcon
             />
-            <h2 matLine>{{ item.food.label | titlecase }}</h2>
+            <h2 matLine>{{ item.foodName | titlecase }}</h2>
             <p matLine>x {{ item.quantity }}</p>
             <p>
-              {{ item.nutrients.calories | number: "1.0-0" }} kcal in
-              {{ item.nutrients.totalWeight | number: "1.0-0" }} grams.
+              {{ item.calories| number: "1.0-0" }} kcal in
+              {{ item.weight | number: "1.0-0" }} grams.
             </p>
             <mat-divider></mat-divider>
           </mat-list-item>
@@ -36,7 +36,7 @@
       </mat-expansion-panel>
     </mat-accordion>
     <mat-action-row>
-      <button mat-button (click)="save()">
+      <button mat-button (click)="save()" class="save-btn">
         Save day<mat-icon>save</mat-icon>
       </button>
     </mat-action-row>

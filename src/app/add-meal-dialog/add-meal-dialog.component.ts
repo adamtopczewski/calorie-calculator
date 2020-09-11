@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FoodDbService } from '../food-db.service';
+import { FoodDbService } from '../services/food-db.service';
 
 export interface DialogData {
   queryResults: any;

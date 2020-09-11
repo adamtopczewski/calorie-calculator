@@ -3,12 +3,19 @@
     <mat-card-header>
       <mat-card-title>Profile</mat-card-title>
       <mat-card-subtitle
-        >Here based on your input we can calculate daily calorie
-        intake</mat-card-subtitle
+        >Based on input your daily calorie intake is
+        calculated</mat-card-subtitle
       >
     </mat-card-header>
 
     <mat-card-content>
+      <div class="calorie-intake" *ngIf="caloriesIntake > 0">
+        <h2>
+          You need <strong>{{ caloriesIntake | number: "1.0-0" }}</strong> kcal
+          per day
+        </h2>
+      </div>
+
       <form
         [formGroup]="profileForm"
         (ngSubmit)="onSubmit()"
@@ -22,13 +29,14 @@
             type="number"
             min="1"
             autofocus
+            value="age"
             formControlName="age"
           />
         </mat-form-field>
         <br />
         <mat-form-field appearance="fill">
           <mat-label>Gender</mat-label>
-          <mat-select formControlName="gender">
+          <mat-select formControlName="gender" value="gender">
             <mat-option value="male">Male</mat-option>
             <mat-option value="female">Female</mat-option>
           </mat-select>
@@ -36,17 +44,29 @@
         <br />
         <mat-form-field appearance="fill">
           <mat-label>Height</mat-label>
-          <input matInput type="number" min="1" formControlName="height" />
+          <input
+            matInput
+            type="number"
+            min="1"
+            formControlName="height"
+            value="height"
+          />
         </mat-form-field>
         <br />
         <mat-form-field appearance="fill">
           <mat-label>Weight</mat-label>
-          <input matInput type="number" min="1" formControlName="wieght" />
+          <input
+            matInput
+            type="number"
+            min="1"
+            formControlName="wieght"
+            value="wieght"
+          />
         </mat-form-field>
         <br />
         <mat-form-field appearance="fill">
           <mat-label>Activity</mat-label>
-          <mat-select formControlName="activity">
+          <mat-select formControlName="activity" value="activity">
             <mat-option value="1">Basal Metabolic Rate (BMR)</mat-option>
             <mat-option value="1.2"
               >Sedentary: little or no exercise</mat-option
@@ -75,16 +95,5 @@
         <button mat-button type="save">Save</button>
       </form>
     </mat-card-content>
-  </mat-card>
-  <mat-card>
-    <div class="calorie-intake">
-      <h2 *ngIf="caloriesIntake > 0">
-        You need <strong>{{ caloriesIntake | number: "1.0-0" }}</strong> kcal per day
-      </h2>
-      <h2 *ngIf="caloriesIntake <= 0">
-        Provide information to the form, so we can calculate your daily calorie
-        intake.
-      </h2>
-    </div>
   </mat-card>
 </section>

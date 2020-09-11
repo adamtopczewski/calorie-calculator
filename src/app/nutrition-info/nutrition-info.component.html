@@ -1,9 +1,12 @@
 <mat-card>
   <mat-card-title>
-    <h1>Total calories</h1>
+    <h2>Total calories</h2>
   </mat-card-title>
   <mat-card-content>
-    <h2>{{ totalCalories }} kcal</h2>
+    <h3>{{ totalCalories }} kcal</h3>
+    <h3 *ngIf="caloriesIntake">
+      Out of {{ caloriesIntake | number: "1.0-0" }} kcal
+    </h3>
     <p>
       Sugars: {{ sugar }} grams <br />
       Fats: {{ fat }} grams <br />
