@@ -3,9 +3,8 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-// Animations and angular material
+// Angular material
 import { AngularMaterialModule } from './angular-material.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //Routing
 import { AppRoutingModule } from './app-routing.module';
 //Components
@@ -18,6 +17,7 @@ import { CalculateMealsComponent } from './calculate-meals/calculate-meals.compo
 import { AddMealDialogComponent } from './add-meal-dialog/add-meal-dialog.component';
 //Services
 import { LocalstorageCrudService } from './services/localstorage-crud.service'
+import { CaloriesCalcService } from './services/calories-calc.service'
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { LocalstorageCrudService } from './services/localstorage-crud.service'
     PlanMealComponent,
     NutritionInfoComponent,
     CalculateMealsComponent,
-    AddMealDialogComponent,
+    AddMealDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -35,10 +35,9 @@ import { LocalstorageCrudService } from './services/localstorage-crud.service'
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    AngularMaterialModule,
+    AngularMaterialModule
   ],
-  providers: [ LocalstorageCrudService ],
+  providers: [ LocalstorageCrudService, CaloriesCalcService ],
   entryComponents: [AddMealDialogComponent],
   bootstrap: [AppComponent],
 })
