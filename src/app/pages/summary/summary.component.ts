@@ -18,7 +18,6 @@ export class SummaryComponent implements OnInit {
   ngOnInit(): void {
     this.calculate.monthlyNutrienDataSource.subscribe((a) => {
       this.monthlyNutrienData = a;
-      console.log(this.monthlyNutrienData)
     });
 
   }
