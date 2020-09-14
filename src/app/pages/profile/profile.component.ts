@@ -15,9 +15,10 @@ export class ProfileComponent implements OnInit {
     age: new FormControl(''),
     gender: new FormControl(''),
     height: new FormControl(''),
-    wieght: new FormControl(''),
+    weight: new FormControl(''),
     activity: new FormControl(''),
   });
+  
   constructor(private calculate: CaloriesCalcService, private localStorage: LocalstorageCrudService) {}
 
   ngOnInit(): void {
