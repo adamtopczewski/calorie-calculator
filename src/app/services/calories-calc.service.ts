@@ -34,7 +34,7 @@ export class CaloriesCalcService {
   }
 
   removeItem(item: any) {
-    let index = this.totalDailyNutrients.indexOf(item);
+    const index = this.totalDailyNutrients.indexOf(item);
     this.totalDailyNutrients.splice(index, 1);
     this.calculateNutriens();
     this.calculateNutriens(this.totalDailyNutrients, 'monthly');
@@ -44,7 +44,7 @@ export class CaloriesCalcService {
     totalNutrients = this.totalDailyNutrients,
     operation = 'daily'
   ) {
-    let dataArray: any = [];
+    const dataArray = [];
     if (!totalNutrients.length) {
       this.dailyNutrienData = {
         carbs: {
@@ -63,8 +63,8 @@ export class CaloriesCalcService {
       this.dailyNutrienDataSource.next(this.dailyNutrienData);
       this.monthlyNutrienDataSource.next({});
     } else {
-      let nutrientsNames = Object.keys(totalNutrients[0]);
-      let data: any = {};
+      const nutrientsNames = Object.keys(totalNutrients[0]);
+      let data = {};
       //Reducing data to one object containg all the values
       nutrientsNames.map((name) => {
         let val = totalNutrients
@@ -119,7 +119,7 @@ export class CaloriesCalcService {
   // Calculating Daily calorie intake
   // Formula from: https://www.calculator.net/calorie-calculator.html
   calculateDailyIntake(formValues) {
-    const WEIGHT = +formValues.wieght;
+    const WEIGHT = +formValues.weight;
     const HEIGHT = +formValues.height;
     const AGE = +formValues.age;
     const ACTIVITY = +formValues.activity;
