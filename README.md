@@ -18,6 +18,7 @@ Lastly users can calculate daily calories intake based on their input.
 - catching errors
 - write tests
 - Add types
+- Fixing bugs
 
 
 *Notes*
