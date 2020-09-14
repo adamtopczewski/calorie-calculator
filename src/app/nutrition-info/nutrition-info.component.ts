@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MealsService } from '../services/meals.service';
 import { CaloriesCalcService } from '../services/calories-calc.service';
 @Component({
   selector: 'app-nutrition-info',
@@ -8,14 +7,12 @@ import { CaloriesCalcService } from '../services/calories-calc.service';
 })
 export class NutritionInfoComponent implements OnInit {
   totalCalories;
-  sugar;
+  carbs;
   protein;
   fat;
   caloriesIntake;
 
-  constructor(
-    private calculate: CaloriesCalcService
-  ) {}
+  constructor(private calculate: CaloriesCalcService) {}
 
   ngOnInit(): void {
     this.getdata();
@@ -23,13 +20,14 @@ export class NutritionInfoComponent implements OnInit {
 
   getdata(): void {
     this.calculate.dailyNutrienDataSource.subscribe((val) => {
-      this.sugar = val.sugar;
+      this.carbs = val.carbs;
       this.protein = val.protein;
       this.fat = val.fat;
       this.totalCalories = val.calories;
     });
-    this.calculate.caloriesIntake.subscribe(
-      (val) => (this.caloriesIntake = val)
-    );
+    this.calculate.caloriesIntake.subscribe((val) => {
+      this.caloriesIntake = val;
+    });
+    this.calculate.calculateNutriens();
   }
 }

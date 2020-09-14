@@ -1,3 +1,41 @@
 <section>
-  <p>summary works!</p>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Monthly summary</mat-card-title>
+      <mat-card-subtitle>Below you can find information about your last 30 entries into the calculator</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+      <button mat-button (click)="populateData()">
+        Populate data
+      </button>
+      <button mat-button (click)="clearStorage()">
+        Clear History
+      </button>
+    </mat-card-actions>
+    <mat-card-content *ngIf="monthlyNutrienData.length">
+      <div class="general-info">
+        <div class="calories">
+          <h3>Calories:</h3>
+            <p class="calories-text" matTooltip="Calculated calories from meals">{{ monthlyNutrienData[3].val| number: "1.0-0" }} in {{ monthlyNutrienData[3].unit}}</p>
+        </div>
+        <div class="macro">
+          <h3>Macronutrients:</h3>
+          <p class="macro-text">
+            Carbs: {{ monthlyNutrienData[1].val }} {{monthlyNutrienData[1].unit}} <br />
+            Fats: {{ monthlyNutrienData[7].val }} {{monthlyNutrienData[7].unit}} <br />
+            Protein: {{ monthlyNutrienData[18].val }} {{monthlyNutrienData[18].unit}} <br />
+          </p>
+        </div>
+      </div>
+      <mat-list dense *ngIf="monthlyNutrienData.length > 0">
+        <div>
+          <p>Here are details about your past 30 days</p>
+        </div>
+        <mat-list-item *ngFor="let nutrien of monthlyNutrienData">
+          <h3 matLine>{{ nutrien.label }}</h3>
+          <p>{{ nutrien.val }} in {{ nutrien.unit }}</p>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
 </section>

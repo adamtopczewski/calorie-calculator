@@ -1,4 +1,7 @@
+import { DataSource } from '@angular/cdk/table';
 import { Component, OnInit } from '@angular/core';
+import { LocalstorageCrudService } from 'src/app/services/localstorage-crud.service';
+import { CaloriesCalcService } from '../../services/calories-calc.service';
 
 @Component({
   selector: 'app-summary',
@@ -6,7 +9,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./summary.component.css'],
 })
 export class SummaryComponent implements OnInit {
-  constructor() {}
+  monthlyNutrienData;
+  constructor(
+    private calculate: CaloriesCalcService,
+    private local: LocalstorageCrudService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.calculate.monthlyNutrienDataSource.subscribe((a) => {
+      this.monthlyNutrienData = a;
+      console.log(this.monthlyNutrienData)
+    });
+
+  }
+
+  populateData() {
+    this.local.populateLocalStorage();
+  }
+
+  clearStorage() {
+    this.local.clear();
+  }
 }

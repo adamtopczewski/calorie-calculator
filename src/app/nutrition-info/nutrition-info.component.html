@@ -1,16 +1,25 @@
 <mat-card>
   <mat-card-title>
-    <h2>Total calories</h2>
+    <h2>Daily summary</h2>
   </mat-card-title>
   <mat-card-content>
-    <h3>{{ totalCalories }} kcal</h3>
-    <h3 *ngIf="caloriesIntake">
-      Out of {{ caloriesIntake | number: "1.0-0" }} kcal
-    </h3>
-    <p>
-      Sugars: {{ sugar }} grams <br />
-      Fats: {{ fat }} grams <br />
-      Protein: {{ protein }} grams <br />
-    </p>
+    <div>
+      <h3>Calories</h3>
+      <div class="daily-calories">
+        <p class="daily-calories-total" matTooltip="Calculated calories from meals">{{ totalCalories.val | number: "1.0-0" }}</p>
+        <div class="slash" *ngIf="caloriesIntake">/</div>
+        <p class="daily-calories-intake" *ngIf="caloriesIntake" matTooltip="Your daily intake">
+          {{ caloriesIntake | number: "1.0-0" }}
+        </p>
+      </div>
+    </div>
+    <div>
+      <h3>Macronutrients:</h3>
+      <p>
+        Carbs: {{ carbs.val }} grams <br />
+        Fats: {{ fat.val }} grams <br />
+        Protein: {{ protein.val }} grams <br />
+      </p>
+    </div>
   </mat-card-content>
 </mat-card>

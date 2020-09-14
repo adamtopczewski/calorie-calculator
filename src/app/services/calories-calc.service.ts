@@ -1,92 +1,136 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CaloriesCalcService {
   totalDailyNutrients = [];
+  totalMonthlyNutrients = {};
   caloriesIntake = new BehaviorSubject(0);
-  dailyNutrienData = this.calculateNutriens();
+
+  dailyNutrienData = {
+    carbs: {
+      val: 0,
+    },
+    protein: {
+      val: 0,
+    },
+    fat: {
+      val: 0,
+    },
+    calories: {
+      val: 0,
+    },
+  };
+
   dailyNutrienDataSource = new BehaviorSubject(this.dailyNutrienData);
-  monthlyNutrienData = this.calculateNutriens();
-  monthlyNutrienDataSource = new BehaviorSubject(this.monthlyNutrienData);
+  monthlyNutrienDataSource = new BehaviorSubject({});
+
   constructor() {}
 
   setDailyNutrients(nutrients) {
     this.totalDailyNutrients.push(nutrients);
   }
-  // Formula from: https://www.calculator.net/calorie-calculator.html
-  calculateDailyIntake(formValues) {
-    const W = +formValues.wieght;
-    const H = +formValues.height;
-    const A = +formValues.age;
-    let BMR;
-    let intake;
 
-    if (formValues.gender == 'male') {
-      BMR = 10 * W + 6.25 * H - 5 * A + 5;
-    } else {
-      BMR = 10 * W + 6.25 * H - 5 * A - 161;
-    }
-    intake = BMR * +formValues.activity;
-    this.caloriesIntake.next(+intake);
+  removeItem(item: any) {
+    let index = this.totalDailyNutrients.indexOf(item);
+    this.totalDailyNutrients.splice(index, 1);
+    this.calculateNutriens();
+    this.calculateNutriens(this.totalDailyNutrients, 'monthly');
   }
-  // Calculate specific nutriens for all meals
-  calculateNutriens(totalNutrients = this.totalDailyNutrients) {
-    let nutrientsNames = ['CA', 'CHOCDF', 'CHOLE', 'ENERC_KCAL', 'FAMS',
-      'FAPU', 'FASAT', 'FAT', 'FE', 'FIBTG', 'FOLAC', 'FOLDFE', 'FOLFD',
-      'K', 'MG', 'NA', 'NIA', 'P', 'PROCNT', 'RIBF', 'SUGAR', 'THIA',
-      'TOCPHA', 'VITA_RAE', 'VITB6A', 'VITB12', 'VITC', 'VITD', 'VITK1',
-      'WATER', 'ZN' ];
-
-
-    if (totalNutrients.length){
-      let data = {};
+  // Calculate nutrients based on operation = 'daily' || 'monthly'
+  calculateNutriens(
+    totalNutrients = this.totalDailyNutrients,
+    operation = 'daily'
+  ) {
+    let dataArray: any = [];
+    if (!totalNutrients.length) {
+      this.dailyNutrienData = {
+        carbs: {
+          val: 0,
+        },
+        protein: {
+          val: 0,
+        },
+        fat: {
+          val: 0,
+        },
+        calories: {
+          val: 0,
+        }
+      }
+      this.dailyNutrienDataSource.next(this.dailyNutrienData);
+      this.monthlyNutrienDataSource.next({});
+    } else {
+      let nutrientsNames = Object.keys(totalNutrients[0]);
+      let data: any = {};
+      //Reducing data to one object containg all the values
       nutrientsNames.map((name) => {
-        let val = this.totalDailyNutrients
+        let val = totalNutrients
           .map((a) => a[name].quantity)
           .reduce((ac, a) => (ac += a))
           .toFixed(1);
-        Object.defineProperty(data, `${name}`, {
-          value: val,
+        Object.defineProperties(data, {
+          val: {
+            value: val,
+          },
+          label: {
+            value: totalNutrients[0][name].label,
+          },
+          unit: {
+            value: totalNutrients[0][name].unit,
+          },
         });
+        dataArray.push(data);
+        data = {};
       });
-      console.log(data);
+      if (operation === 'daily') {
+        this.dailyNutrienData = {
+          carbs: dataArray.find((a) => a.label == 'Carbs'),
+          protein: dataArray.find((a) => a.label == 'Protein'),
+          fat: dataArray.find((a) => a.label == 'Fat'),
+          calories: dataArray.find((a) => a.label == 'Energy'),
+        };
+        this.dailyNutrienDataSource.next(this.dailyNutrienData);
+      } else if (operation === 'monthly') {
+        this.monthlyNutrienDataSource.next(dataArray);
+      }
     }
+  }
 
-
-    // let nutrientsNames2 = totalNutrients.keys()
-    if (totalNutrients.length) {
-      let sugar = totalNutrients
-        .map((a) => a.SUGAR.quantity)
-        .reduce((ac, a) => (ac += a))
-        .toFixed(1);
-      let protein = totalNutrients
-        .map((a) => a.PROCNT.quantity)
-        .reduce((ac, a) => (ac += a))
-        .toFixed(1);
-      let fat = totalNutrients
-        .map((a) => a.FAT.quantity)
-        .reduce((ac, a) => (ac += a))
-        .toFixed(1);
-      let calories = totalNutrients
-        .map((a) => a.ENERC_KCAL.quantity)
-        .reduce((ac, a) => (ac += a))
-        .toFixed(0);
-      this.dailyNutrienData = {
-        sugar,
-        protein,
-        fat,
-        calories,
-      };
-      this.dailyNutrienDataSource.next(this.dailyNutrienData);
+  resetDaily(){
+    this.dailyNutrienData = {
+      carbs: {
+        val: 0,
+      },
+      protein: {
+        val: 0,
+      },
+      fat: {
+        val: 0,
+      },
+      calories: {
+        val: 0,
+      }
     }
-    return {
-      sugar: 0,
-      protein: 0,
-      fat: 0,
-      calories: 0,
-    };
+    this.dailyNutrienDataSource.next(this.dailyNutrienData);
+  }
+  // Calculating Daily calorie intake
+  // Formula from: https://www.calculator.net/calorie-calculator.html
+  calculateDailyIntake(formValues) {
+    const WEIGHT = +formValues.wieght;
+    const HEIGHT = +formValues.height;
+    const AGE = +formValues.age;
+    const ACTIVITY = +formValues.activity;
+    let BMR; //basal metabolic rate
+    let intake;
+    if (formValues.gender == 'male') {
+      BMR = 10 * WEIGHT + 6.25 * HEIGHT - 5 * AGE + 5;
+    } else {
+      BMR = 10 * WEIGHT + 6.25 * HEIGHT - 5 * AGE - 161;
+    }
+    intake = BMR * ACTIVITY;
+    this.caloriesIntake.next(+intake);
   }
 }

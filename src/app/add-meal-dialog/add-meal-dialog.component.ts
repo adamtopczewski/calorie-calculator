@@ -1,5 +1,6 @@
-import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { FoodDbService } from '../services/food-db.service';
 
 export interface DialogData {
@@ -14,11 +15,13 @@ export interface DialogData {
 export class AddMealDialogComponent implements OnInit {
   queryResults: any;
   mealId;
+  loading = false;
 
   constructor(
     public dialogRef: MatDialogRef<AddMealDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private foodDb: FoodDbService
+    private foodDb: FoodDbService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -30,13 +33,17 @@ export class AddMealDialogComponent implements OnInit {
   }
 
   searchFood(query: string): void {
-    this.foodDb
-      .searchFood(query)
-      .subscribe((results) => (this.queryResults = results));
+    this.loading = true;
+    this.foodDb.searchFoods(query).subscribe((results) => {
+      this.queryResults = results;
+      this.loading = false;
+    });
   }
 
   chooseItem(query, measure, quantity, mealId): void {
     let id = query.food.foodId;
-    this.foodDb.chooseFood(query, measure, id, quantity, mealId).subscribe();
+    this.foodDb.chooseFood(query, measure, id, quantity, mealId).subscribe(_ => {
+      this._snackBar.open('Food has been added', '🍌' , {duration: 2000});
+    });
   }
 }

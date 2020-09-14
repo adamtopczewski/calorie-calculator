@@ -21,10 +21,13 @@
             />
             <h2 matLine>{{ item.foodName | titlecase }}</h2>
             <p matLine>x {{ item.quantity }}</p>
-            <p>
-              {{ item.calories| number: "1.0-0" }} kcal in
+            <p class="item-calories">
+              {{ item.calories | number: "1.0-0" }} kcal in
               {{ item.weight | number: "1.0-0" }} grams.
             </p>
+            <button mat-button (click)="delete(item, meal.mealId)">
+              <mat-icon>delete</mat-icon>
+            </button>
             <mat-divider></mat-divider>
           </mat-list-item>
         </mat-list>
@@ -35,10 +38,5 @@
         </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
-    <mat-action-row>
-      <button mat-button (click)="save()" class="save-btn">
-        Save day<mat-icon>save</mat-icon>
-      </button>
-    </mat-action-row>
   </mat-card-content>
 </mat-card>

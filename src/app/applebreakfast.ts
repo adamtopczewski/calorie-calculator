@@ -1,3 +1,6 @@
+// Cached apples for breakfast (1kg)
+// It's used to demo summary page
+
 export const appleBreakfast = {
   meals: [
     {

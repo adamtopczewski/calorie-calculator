@@ -1,21 +1,51 @@
 import { Injectable } from '@angular/core';
 import { meals } from '../meals';
 import { appleBreakfast } from '../applebreakfast';
+import { CaloriesCalcService } from '../services/calories-calc.service';
+import { FoodDbService } from './food-db.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalstorageCrudService {
+  public meals;
+  mealsHistory = [];
+
   today = new Date();
   todayString = this.today.toDateString();
-  mealsHistory = [];
-  meals;
 
-  constructor() {
-    this.meals = meals;
+  constructor(
+    private foodDb: FoodDbService,
+    private calculate: CaloriesCalcService,
+    private _snackBar: MatSnackBar
+   ) {
     this.init();
-    this.populateLocalStorage();
-    // this.getMonthlyNutriens();
+    this.foodDb.foodItem.subscribe((value) => {
+      this.calculate.setDailyNutrients(value.nutrients);
+      this.meals.forEach((element) => {
+        if (element.mealId == value.mealId) {
+          element.items.push(value);
+          element.totalCal += value.calories;
+        }
+      });
+      this.update(this.meals)
+    });
+  }
+
+  clear(){
+    localStorage.clear();
+    this.mealsHistory = [];
+    this.meals = meals
+    this.mealsHistory.push({
+      date: this.todayString,
+      meals: this.meals,
+    });
+    localStorage.setItem('mealsHistory', JSON.stringify(this.mealsHistory));
+    this.getMonthlyNutrients();
+    this.calculate.resetDaily();
+    this.getDailyNutrients();
   }
 
   update(meals) {
@@ -27,38 +57,40 @@ export class LocalstorageCrudService {
       }
     }
     localStorage.setItem('mealsHistory', JSON.stringify(prevMeals));
+    this.getDailyNutrients();
+    this.getMonthlyNutrients();
   }
 
-  getMonthlyNutriens() {
-    let data = [];
-    let combinedData = {
-      ENERC_KCAL: { label: 'Energy', quantity: null, unit: 'kcal' },
-      FAT: { label: 'Fat', quantity: null, unit: 'g' },
-      PROCNT: { label: 'Protein', quantity: null, unit: 'g' },
-      SUGAR: { label: 'Sugars', quantity: null, unit: 'g' },
-    };
+  getDailyNutrients() {
+    this.calculate.calculateNutriens();
+  }
 
-    for(let i = 0; i < this.mealsHistory.length; i++) {
-      for(let j = 0; j < this.mealsHistory[i].meals.length; j++){
-        console.log('inner loop')
-        if(this.mealsHistory[i].meals[j].items.length){
-          for(let g = 0; g < this.mealsHistory[i].meals[j].items.length; g++){
-            data.push(this.mealsHistory[i].meals[j].items[g].nutrients.totalNutrients)
+  getMonthlyNutrients() {
+    let monthlyNutrients = [];
+    this.mealsHistory.forEach(a => {
+      a.meals.forEach(a =>{
+        if(a.items.length > 0){
+          a.items.forEach(item => monthlyNutrients.push(item.nutrients))
+        }
+      })
+    })
+    this.calculate.calculateNutriens(monthlyNutrients, 'monthly')
+  }
+
+  deleteItem(item, mealId) {
+    this.meals.forEach(element => {
+      if(element.mealId === mealId){
+        element.totalCal = null
+        for(let i = 0; i < element.items.length; i++){
+          if(element.items[i] === item){
+            this.calculate.removeItem(element.items[i].nutrients)
+            element.items.splice(i,1)
           }
         }
       }
-    }
-    // this.mealsHistory.forEach((a) =>
-    //   data.push(a.meals[0].items[0].nutrients.totalNutrients)
-    // );
-    console.log(data)
-    for (let i = 0; i < data.length; i++) {
-      combinedData.ENERC_KCAL.quantity += +data[i].ENERC_KCAL.quantity.toFixed();
-      combinedData.FAT.quantity += +data[i].FAT.quantity.toFixed();
-      combinedData.PROCNT.quantity += +data[i].PROCNT.quantity.toFixed();
-      combinedData.SUGAR.quantity += +data[i].SUGAR.quantity.toFixed();
-    }
-    console.log(combinedData);
+    });
+    this.update(this.meals)
+    this._snackBar.open('Food has deleted', '🦴' , {duration: 2000});
   }
 
   populateLocalStorage() {
@@ -77,35 +109,45 @@ export class LocalstorageCrudService {
       this.mealsHistory.unshift(...tempArray);
       localStorage.setItem('mealsHistory', JSON.stringify(this.mealsHistory));
     }
+    this.getMonthlyNutrients();
   }
 
   init() {
+    //Empty Local Storage
     if (
       localStorage.getItem('mealsHistory') === null ||
       localStorage.getItem('mealsHistory') == undefined
     ) {
       this.mealsHistory.push({
         date: this.todayString,
-        meals: this.meals,
+        meals: meals,
       });
       localStorage.setItem('mealsHistory', JSON.stringify(this.mealsHistory));
       return;
-    } else {
-      this.mealsHistory = JSON.parse(localStorage.getItem('mealsHistory'));
-      if (
-        this.mealsHistory[this.mealsHistory.length - 1].date !==
-        this.todayString
-      ) {
-        console.log('error found', this.mealsHistory);
-        this.mealsHistory.push({
-          date: this.todayString,
-          meals: this.meals,
-        });
-        localStorage.setItem('mealsHistory', JSON.stringify(this.mealsHistory));
-      } else {
-        console.log('its fine');
-        return;
-      }
     }
+    this.mealsHistory = JSON.parse(localStorage.getItem('mealsHistory'));
+    //Checks for a new day and mealsHistory length (up to 30 entries)
+    if (
+      this.mealsHistory[this.mealsHistory.length - 1].date !== this.todayString
+    ) {
+      this.mealsHistory.push({
+        date: this.todayString,
+        meals: meals,
+      });
+      localStorage.setItem('mealsHistory', JSON.stringify(this.mealsHistory));
+    } else if (this.mealsHistory.length > 30) {
+      let lastMonth = this.mealsHistory.slice(-30);
+      localStorage.setItem('mealsHistory', JSON.stringify(lastMonth));
+      this.mealsHistory = lastMonth;
+    }
+    // Updating local meals and daily nutrients
+    this.meals = this.mealsHistory[this.mealsHistory.length - 1].meals
+    this.meals.forEach(element => {
+      if(element.items.length > 0){
+        element.items.forEach(a => this.calculate.setDailyNutrients(a.nutrients))
+      }
+      this.getDailyNutrients();
+    });
+    this.getMonthlyNutrients();
   }
 }

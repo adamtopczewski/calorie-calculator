@@ -9,22 +9,23 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class FoodDbService {
-  private mealId;
-  // @Output() foodItem: EventEmitter<any> = new EventEmitter();
-  private foodItemSource = new Subject<any>();
-  public foodItem = this.foodItemSource.asObservable();
-
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  };
+  //API
   private foodSearchUrl: string = `https://api.edamam.com/api/food-database/v2/parser?ingr=`;
   private itemNutriensUrl: string = `https://api.edamam.com/api/food-database/v2/nutrients?`;
   private apiId: string = environment.API_ID;
   private apiKey: string = environment.API_KEY;
+  //Config
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
+  //Food response
+  private foodItemSource = new Subject<any>();
+  public foodItem = this.foodItemSource.asObservable();
+  private mealId;
 
   constructor(private http: HttpClient) {}
 
-  searchFood(food: string): Observable<any> {
+  searchFoods(food: string): Observable<any> {
     food.trim();
     if (!food) {
       return;
@@ -67,8 +68,6 @@ export class FoodDbService {
       weight: nutrients.totalWeight,
       mealId: this.mealId,
     };
-    console.log(data)
-    // this.foodItem.emit(data);
     this.foodItemSource.next(data)
   }
 }

@@ -15,7 +15,6 @@
           per day
         </h2>
       </div>
-
       <form
         [formGroup]="profileForm"
         (ngSubmit)="onSubmit()"
@@ -26,6 +25,7 @@
           <mat-label>Age</mat-label>
           <input
             matInput
+            autocomplete="off"
             type="number"
             min="1"
             autofocus
@@ -46,6 +46,7 @@
           <mat-label>Height</mat-label>
           <input
             matInput
+            autocomplete="off"
             type="number"
             min="1"
             formControlName="height"
@@ -57,6 +58,7 @@
           <mat-label>Weight</mat-label>
           <input
             matInput
+            autocomplete="off"
             type="number"
             min="1"
             formControlName="wieght"
@@ -92,7 +94,6 @@
         </mat-form-field>
         <br />
         <button mat-button type="submit">Submit</button>
-        <button mat-button type="save">Save</button>
       </form>
     </mat-card-content>
   </mat-card>
