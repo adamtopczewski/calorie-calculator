@@ -59,7 +59,7 @@ export class FoodDbService {
   }
 
   addFood(food, quantity, nutrients) {
-    let data = {
+    this.foodItemSource.next({
       foodName: food.food.label,
       foodImage: food.food.image,
       quantity: quantity,
@@ -67,7 +67,6 @@ export class FoodDbService {
       nutrients: nutrients.totalNutrients,
       weight: nutrients.totalWeight,
       mealId: this.mealId,
-    };
-    this.foodItemSource.next(data)
+    })
   }
 }

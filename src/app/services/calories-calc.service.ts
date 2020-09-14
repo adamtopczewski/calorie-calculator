@@ -123,14 +123,14 @@ export class CaloriesCalcService {
     const HEIGHT = +formValues.height;
     const AGE = +formValues.age;
     const ACTIVITY = +formValues.activity;
-    let BMR; //basal metabolic rate
+    let bmr; //basal metabolic rate
     let intake;
     if (formValues.gender == 'male') {
-      BMR = 10 * WEIGHT + 6.25 * HEIGHT - 5 * AGE + 5;
+      bmr = 10 * WEIGHT + 6.25 * HEIGHT - 5 * AGE + 5;
     } else {
-      BMR = 10 * WEIGHT + 6.25 * HEIGHT - 5 * AGE - 161;
+      bmr = 10 * WEIGHT + 6.25 * HEIGHT - 5 * AGE - 161;
     }
-    intake = BMR * ACTIVITY;
+    intake = bmr * ACTIVITY;
     this.caloriesIntake.next(+intake);
   }
 }
