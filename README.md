@@ -17,8 +17,8 @@ Lastly users can calculate daily calories intake based on their input.
 - reworking mat dialog to be RWD
 - catching errors
 - write tests
-- Add types
-- Fixing bugs
+- add types
+- fixing bugs
 
 
 *Notes*
