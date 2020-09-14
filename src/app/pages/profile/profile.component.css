@@ -1,22 +1,25 @@
 .mat-card {
   align-self: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 50%;
   margin: 0 3em;
 }
 
-
 .calorie-intake {
+  padding: 1em;
   margin: 2em auto;
   text-align: center;
   align-items: center;
 }
 
 .calorie-intake h2 {
-  color: var(--accent-color);
+  color: var(--sec-txt-color);
 }
 
 .mat-card-title {
-  color: var(--main-txt-color);
   margin-top: 1em;
 }
 .mat-card-subtitle {
@@ -24,5 +27,15 @@
 }
 
 button {
-  color: var(--main-txt-color);
+  color: var(--accent-color);
 }
+
+/* add to mat-card width 90% on mobile */
+@media (max-width: 767.98px) {
+  .container{
+    width: 100%;
+  }
+  .mat-card {
+    width: 90%;
+  }
+ }

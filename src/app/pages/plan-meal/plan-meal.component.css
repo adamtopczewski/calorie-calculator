@@ -11,6 +11,7 @@
 app-calculate-meals {
   flex-grow: 3;
   margin: 0 2em;
+  align-self: flex-start;
 }
 app-nutrition-info {
   flex-grow: 2.5;
@@ -18,3 +19,37 @@ app-nutrition-info {
   align-self: flex-start;
   text-align: center;
 }
+
+
+@media (max-width: 1199.98px) {
+  section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  }
+
+  app-calculate-meals {
+    width: 100%;
+    flex-grow: 1;
+    margin: 0 auto;
+  }
+  app-nutrition-info {
+    width: 80%;
+    flex-grow: 1;
+    margin-top: 2em;
+    align-self: center;
+    text-align: center;
+  }
+}
+@media (max-width: 767.98px) {
+  .container{
+    width: 100%;
+  }
+  app-calculate-meals {
+    width: 90%;
+  }
+  app-nutrition-info {
+    width: 90%;
+  }
+ }

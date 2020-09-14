@@ -8,15 +8,25 @@ li img {
   max-width: 50px;
 }
 
+.list-item {
+  color: var(--sec-text-color);
+}
+
 mat-panel-title {
-  color: var(--main-txt-color);
+  color: var(--sec-txt-color);
   font-weight: 550;
+}
+
+mat-panel-description {
+  color: var(--sec-txt-color);
 }
 
 button {
   color: var(--accent-color);
 }
 
-.save-btn {
-  color: var(--main-txt-color);
+
+.item-calories{
+  margin: 0 2em;
 }
+

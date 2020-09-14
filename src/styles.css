@@ -1,37 +1,136 @@
-/* You can add global styles to this file, and also import other style files */
-
+/* Fonts import */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap');
+/* inspired by https://colorhunt.co/palette/201686 */
 :root {
-  --main-bg-color: #f6f5f5;;
-  --main-txt-color: #00334e;
-  --sec-txt-color: #145374;
-  --accent-color: #ee6f57;
+  /* Colors */
+  --main-bg-color: #f1f3f8;
+  --main-txt-color: #2a2c33;
+  --sec-txt-color: #f1f3f8;
+  --accent-color: #ffcf4a;
+  --sec-bg-color: #425470;
+  --ligth-bg-color: #35445e;
+  /* Fonts */
+  --main-font: 'Red Hat Text', sans-serif;
+  --logo-font: 'Fredoka One', cursive;
 }
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
 
-body { margin: 0;
-    font-family: Roboto,
-    "Helvetica Neue", sans-serif;
-    background-color: var(--main-bg-color);
-    color: var(--sec-txt-color);
+body {
+  margin: 0;
+  font-family: var(--main-font);
+  background-color: var(--main-bg-color);
+  color: var(--main-txt-color);
+  overflow-x: hidden;
+}
+
+* {
+  font-family: var(--sec-font);
 }
 
 h2,
 h3,
 p {
-  color: var(--main-txt-color);
+  color: var(--sec-txt-color);
+}
+
+h2 {
+  font-size: 2rem;
+  margin: 0 auto;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  font-size: 1rem;
 }
 
 section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5em;
 }
 
 .container {
-    width: 95%;
-    margin: 0 auto;
+  width: 95%;
+  margin: 0 auto;
 }
 
-/* https://colorhunt.co/palette/201897 */
+/* material elements colors */
+/* BG's */
+.mat-card {
+  background-color: var(--sec-bg-color);
+  -webkit-box-shadow: 3px 3px 15px 1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 3px 3px 15px 1px rgba(0,0,0,0.75);
+  box-shadow: 3px 3px 15px 1px rgba(0,0,0,0.75);
+}
+.mat-expansion-panel {
+  background-color: var(--ligth-bg-color);
+}
+.mat-dialog-container {
+  background-color: var(--sec-bg-color);
+}
+.mat-input {
+  background-color: var(--sec-bg-color);
+}
+
+/* Text */
+input{
+  color: var(--sec-txt-color);
+}
+mat-label {
+  color: var(--sec-txt-color);
+}
+.mat-form-field {
+  color: var(--sec-txt-color);
+}
+.mat-select-value-text{
+  color: var(--sec-txt-color);
+}
+.mat-card-title {
+  color: var(--sec-txt-color);
+}
+.mat-card-subtitle {
+  color: var(--sec-txt-color);
+}
+/*
+Fix for angular material component
+provided by user: thw0rted
+https://github.com/angular/components/issues/11765
+*/
+.ng-animating mat-card mat-expansion-panel-header {
+  height: 48px;
+}
+.ng-animating mat-card div.mat-expansion-panel-content {
+  height: 0px;
+  visibility: hidden;
+}
+/*
+Costume scroll design
+https://codepen.io/devstreak/pen/dMYgeO
+*/
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+::-webkit-scrollbar
+{
+    width: 10px;
+}
+::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: var(--accent-color);
+}

@@ -1,9 +1,9 @@
 @keyframes linkPop {
   from {
-    transform: scale(1);
+    transform: translateY(0);
   }
   to {
-    transform: scale(1.1);
+    transform: translateY(2px);
   }
 }
 
@@ -13,7 +13,7 @@ a {
 }
 
 a:hover {
-  animation: linkPop 0.1s ease-in forwards;
+  animation: linkPop 0.2s ease-out forwards;
 }
 
 .navbar {
@@ -25,19 +25,35 @@ a:hover {
   padding: 2em;
 }
 
-.navbar-logo h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 0;
+.navbar-logo h1 a{
+  font-size: 2.5rem;
+  font-family: var(--logo-font);
   cursor: pointer;
 }
 
 .navbar-links {
-  font-size: 1.4rem;
+  font-size: 2rem;
   display: flex;
+  align-items: center;
 }
 
 .navbar-links a {
   margin: 0 1em;
   font-weight: 600;
+  font-family: var(--logo-font);
+}
+
+
+@media (max-width: 991.98px) {
+  .navbar-logo h1 a{
+    font-size: 3rem;
+  }
+
+  .navbar-links {
+    font-size: 1.3rem;
+    margin-top: 1em;
+  }
+  .navbar{
+    flex-direction: column;
+  }
 }

@@ -1,0 +1,65 @@
+.mat-card {
+  width: 60%;
+  height: 60vh;
+  overflow: hidden;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-card-header{
+  justify-content: center;
+}
+.mat-card-title {
+  margin: 0.5em auto;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: var(--main-font);
+}
+
+.mat-card-subtitle {
+  font-size: 1.1rem;
+}
+
+.mat-card-content {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.calories-text{
+  font-weight: 550;
+}
+
+.macro-text{
+  font-weight: 550;
+}
+.general-info{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+}
+.mat-list {
+  margin-top: 2em;
+}
+
+.mat-card-actions{
+  width: 100%;
+  justify-content: flex-end;
+}
+button {
+  background-color: var(--sec-bg-color);
+  color: var(--accent-color);
+  float: right;
+}
+
+
+
+@media (max-width: 767.98px) {
+  .container{
+    width: 100%;
+  }
+  .mat-card {
+    width: 90%;
+  }
+ }
