@@ -15,10 +15,17 @@ Lastly users can calculate daily calories intake based on their input.
 *Things to be done*
 - refactor of the services based on feedback from code reviews
 - reworking mat dialog to be RWD
+- catching errors
+- write tests
+- Add types
+
+
+*Notes*
+- Edamam free plan allows only for 10 request per minute
 
 
 *Known issues*
-- https://github.com/angular/components/issues/11765
+- mat-expansion-panel compatibility https://github.com/angular/components/issues/11765
 
 **Credits**
 Forumula for calculating daily intake: https://www.calculator.net/calorie-calculator.html
