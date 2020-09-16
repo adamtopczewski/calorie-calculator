@@ -13,12 +13,12 @@ Lastly users can calculate daily calories intake based on their input.
 
 
 *Things to be done*
-- refactor of the services based on feedback from code reviews
+- ~~refactor of the services based on feedback from code reviews~~ *partialy done*
 - reworking mat dialog to be RWD
 - catching errors
 - write tests
 - add types
-- fixing bugs
+- ~~fixing bugs~~
 
 
 *Notes*
