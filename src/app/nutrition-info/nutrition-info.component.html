@@ -6,7 +6,7 @@
     <div>
       <h3>Calories</h3>
       <div class="daily-calories">
-        <p class="daily-calories-total" matTooltip="Calculated calories from meals">{{ totalCalories.val | number: "1.0-0" }}</p>
+        <p class="daily-calories-total" matTooltip="Calculated calories from meals">{{ totalCalories.quantity | number: "1.0-0" }}</p>
         <div class="slash" *ngIf="caloriesIntake">/</div>
         <p class="daily-calories-intake" *ngIf="caloriesIntake" matTooltip="Your daily intake">
           {{ caloriesIntake | number: "1.0-0" }}
@@ -16,9 +16,9 @@
     <div>
       <h3>Macronutrients:</h3>
       <p>
-        Carbs: {{ carbs.val }} grams <br />
-        Fats: {{ fat.val }} grams <br />
-        Protein: {{ protein.val }} grams <br />
+        Carbs: {{ carbs.quantity | number: "1.0-0" }} grams <br />
+        Fats: {{ fat.quantity | number: "1.0-0"  }} grams <br />
+        Protein: {{ protein.quantity | number: "1.0-0"  }} grams <br />
       </p>
     </div>
   </mat-card-content>

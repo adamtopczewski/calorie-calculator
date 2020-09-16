@@ -1,107 +1,69 @@
 import { Injectable } from '@angular/core';
-import { meals } from '../meals';
 import { appleBreakfast } from '../applebreakfast';
-import { CaloriesCalcService } from '../services/calories-calc.service';
-import { FoodDbService } from './food-db.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { meals } from '../meals';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalstorageCrudService {
-  public meals;
+  emptyMeals = meals;
+  meals = new BehaviorSubject(this.emptyMeals);
+  meals$ = this.meals.asObservable();
+
   mealsHistory = [];
+  localStorageKey: string = 'mealsHistory';
 
   today = new Date();
   todayString = this.today.toDateString();
 
-  localStorageKey:string = 'mealsHistory'
-
-  constructor(
-    private foodDb: FoodDbService,
-    private calculate: CaloriesCalcService,
-    private _snackBar: MatSnackBar
-   ) {
+  constructor() {
     this.init();
-    this.foodDb.foodItem.subscribe((value) => {
-      this.calculate.setDailyNutrients(value.nutrients);
-      this.meals.forEach((element) => {
-        if (element.mealId === value.mealId) {
-          element.items.push(value);
-          element.totalCal += value.calories;
-        }
-      });
-      this.update(this.meals)
-    });
   }
 
-  clear(){
+  getMeals(): Observable<any> {
+    return this.meals$;
+  }
+
+  setMeals(meals) {
+    this.meals.next(meals);
+  }
+
+  getMealsHistory() {
+    return JSON.parse(localStorage.getItem(this.localStorageKey));
+  }
+
+  setMealsHistory(items) {
+    localStorage.setItem(this.localStorageKey, JSON.stringify(items));
+  }
+
+  getMonthlyNutrients(){
+    const historyMap = this.mealsHistory.map(a => a.meals).flat()
+    const mappedMeals = historyMap.map(meal => meal.items).filter(item => item.length > 0).map(item => item[0].nutrients).flat()
+    return mappedMeals.length > 0 ? mappedMeals : [{}];
+  }
+
+  clear() {
     localStorage.clear();
-    this.mealsHistory = [];
-    this.meals = meals
-    this.mealsHistory.push({
-      date: this.todayString,
-      meals: this.meals,
-    });
-    this.setItem(this.localStorageKey, this.stringify(this.mealsHistory));
-    // localStorage.setItem(this.localStorageKey, JSON.stringify(this.mealsHistory));
-    this.getMonthlyNutrients();
-    this.calculate.resetDaily();
-    this.getDailyNutrients();
+    this.init();
   }
 
   update(meals) {
-    this.meals = meals;
-    const prevMeals = JSON.parse(localStorage.getItem(this.localStorageKey));
+    this.setMeals(meals);
+    const prevMeals = this.getMealsHistory();
     for (let i = 0; i < prevMeals.length; i++) {
       if (prevMeals[i].date === this.todayString) {
         prevMeals[i].meals = meals;
       }
     }
-    this.setItem(this.localStorageKey, this.stringify(prevMeals));
-    // localStorage.setItem(this.localStorageKey, JSON.stringify(prevMeals));
-    this.getDailyNutrients();
-    this.getMonthlyNutrients();
-  }
-
-  getDailyNutrients() {
-    this.calculate.calculateNutriens();
-  }
-
-  getMonthlyNutrients() {
-    const monthlyNutrients = [];
-    this.mealsHistory.forEach(a => {
-      a.meals.forEach(a =>{
-        if(a.items.length > 0){
-          a.items.forEach(item => monthlyNutrients.push(item.nutrients))
-        }
-      })
-    })
-    this.calculate.calculateNutriens(monthlyNutrients, 'monthly')
-  }
-
-  deleteItem(item, mealId) {
-    this.meals.forEach(element => {
-      if(element.mealId === mealId){
-        element.totalCal = null
-        for(let i = 0; i < element.items.length; i++){
-          if(element.items[i] === item){
-            this.calculate.removeItem(element.items[i].nutrients)
-            element.items.splice(i,1)
-          }
-        }
-      }
-    });
-    this.update(this.meals)
-    this._snackBar.open('Food has deleted', '🦴' , {duration: 2000});
+    this.setMealsHistory(prevMeals);
+    this.mealsHistory = [...this.getMealsHistory()];
   }
 
   populateLocalStorage() {
-    if (this.mealsHistory.length <= 1) {
-      const past30Days = new Date();
+      let past30Days = new Date();
       const tempArray = [];
-      past30Days.setDate(past30Days.getDate() - 30);
+      past30Days.setDate(past30Days.getDate() - 29);
       for (let i = 0; +past30Days < +this.today; i++) {
         let dayString = past30Days.toDateString();
         tempArray.push({
@@ -110,69 +72,27 @@ export class LocalstorageCrudService {
         });
         past30Days.setDate(past30Days.getDate() + 1);
       }
-      this.mealsHistory.unshift(...tempArray);
-      this.setItem(this.localStorageKey, this.stringify(this.mealsHistory));
-      // localStorage.setItem(this.localStorageKey, JSON.stringify(this.mealsHistory));
-
-    }
-    this.getMonthlyNutrients();
+      this.mealsHistory= [...tempArray, ...this.mealsHistory];
+      this.setMealsHistory(this.mealsHistory);
   }
-    //Helper functions
-    stringify(obj:object) {
-      return JSON.stringify(this.mealsHistory)
-    }
-
-    parse(json:string){
-      return JSON.parse(json)
-    }
-    getLocal(key:string) {
-      return localStorage.getItem(key)
-    }
-
-    setItem(key:string, json:string){
-      localStorage.setItem(key, json);
-    }
 
   init() {
-    //Empty Local Storage
-    if (
-      localStorage.getItem(this.localStorageKey) === null ||
-      localStorage.getItem(this.localStorageKey) == undefined
-    ) {
-      this.mealsHistory.push({
-        date: this.todayString,
-        meals: meals,
-      });
-      this.setItem(this.localStorageKey, this.stringify(this.mealsHistory));
-      // localStorage.setItem(this.localStorageKey, JSON.stringify(this.mealsHistory));
-      return;
+    let history = this.getMealsHistory();
+    if (!history) {
+      const firstEntry = [{ date: this.todayString, meals: this.emptyMeals }];
+      history = firstEntry;
+    } else if (history[history.length - 1].date !== this.todayString) {
+      const newHistory = [
+        ...history,
+        { date: this.todayString, meals: this.emptyMeals },
+      ];
+      history = newHistory;
+    } else if (history.length > 30) {
+      const lastMonth = history.slice(-30);
+      history = lastMonth;
     }
-    this.mealsHistory = this.parse(this.getLocal(this.localStorageKey));
-    // this.mealsHistory = JSON.parse(localStorage.getItem(this.localStorageKey));
-    //Checks for a new day and mealsHistory length (up to 30 entries)
-    if (
-      this.mealsHistory[this.mealsHistory.length - 1].date !== this.todayString
-    ) {
-      this.mealsHistory.push({
-        date: this.todayString,
-        meals: meals,
-      });
-      this.setItem(this.localStorageKey, this.stringify(this.mealsHistory));
-      // localStorage.setItem(this.localStorageKey, JSON.stringify(this.mealsHistory));
-    } else if (this.mealsHistory.length > 30) {
-      const lastMonth = this.mealsHistory.slice(-30);
-      this.setItem(this.localStorageKey, this.stringify(lastMonth));
-      // localStorage.setItem(this.localStorageKey, JSON.stringify(lastMonth));
-      this.mealsHistory = lastMonth;
-    }
-    // Updating local meals and daily nutrients
-    this.meals = this.mealsHistory[this.mealsHistory.length - 1].meals
-    this.meals.forEach(element => {
-      if(element.items.length > 0){
-        element.items.forEach(a => this.calculate.setDailyNutrients(a.nutrients))
-      }
-      this.getDailyNutrients();
-    });
-    this.getMonthlyNutrients();
+    this.setMealsHistory(history);
+    this.mealsHistory = this.getMealsHistory();
+    this.setMeals(history[history.length - 1].meals);
   }
 }
