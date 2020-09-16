@@ -18,6 +18,7 @@ import { AddMealDialogComponent } from './add-meal-dialog/add-meal-dialog.compon
 //Services
 import { LocalstorageCrudService } from './services/localstorage-crud.service'
 import { CaloriesCalcService } from './services/calories-calc.service'
+import { PlanMealsService } from './services/plan-meals.service'
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { CaloriesCalcService } from './services/calories-calc.service'
     AppRoutingModule,
     AngularMaterialModule
   ],
-  providers: [ LocalstorageCrudService, CaloriesCalcService ],
+  providers: [ PlanMealsService ],
   entryComponents: [AddMealDialogComponent],
   bootstrap: [AppComponent],
 })

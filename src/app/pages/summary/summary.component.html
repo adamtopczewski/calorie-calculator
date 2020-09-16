@@ -12,28 +12,28 @@
         Clear History
       </button>
     </mat-card-actions>
-    <mat-card-content *ngIf="monthlyNutrienData.length">
+    <mat-card-content *ngIf="monthlyNutrienData.hasOwnProperty('ENERC_KCAL')">
       <div class="general-info">
         <div class="calories">
           <h3>Calories:</h3>
-            <p class="calories-text" matTooltip="Calculated calories from meals">{{ monthlyNutrienData[3].val| number: "1.0-0" }} in {{ monthlyNutrienData[3].unit}}</p>
+            <p class="calories-text" matTooltip="Calculated calories from meals">{{ monthlyNutrienData.ENERC_KCAL.quantity| number: "1.0-0" }} in {{ monthlyNutrienData.ENERC_KCAL.unit}}</p>
         </div>
         <div class="macro">
           <h3>Macronutrients:</h3>
           <p class="macro-text">
-            Carbs: {{ monthlyNutrienData[1].val }} {{monthlyNutrienData[1].unit}} <br />
-            Fats: {{ monthlyNutrienData[7].val }} {{monthlyNutrienData[7].unit}} <br />
-            Protein: {{ monthlyNutrienData[18].val }} {{monthlyNutrienData[18].unit}} <br />
+            Carbs: {{ monthlyNutrienData.CHOCDF.quantity| number: "1.0-0" }} {{monthlyNutrienData.CHOCDF.unit}} <br />
+            Fats: {{ monthlyNutrienData.FAT.quantity| number: "1.0-0"  }} {{monthlyNutrienData.FAT.unit}} <br />
+            Protein: {{ monthlyNutrienData.PROCNT.quantity| number: "1.0-0"  }} {{monthlyNutrienData.PROCNT.unit}} <br />
           </p>
         </div>
       </div>
-      <mat-list dense *ngIf="monthlyNutrienData.length > 0">
+      <mat-list dense>
         <div>
           <p>Here are details about your past 30 days</p>
         </div>
-        <mat-list-item *ngFor="let nutrien of monthlyNutrienData">
-          <h3 matLine>{{ nutrien.label }}</h3>
-          <p>{{ nutrien.val }} in {{ nutrien.unit }}</p>
+        <mat-list-item *ngFor="let nutrien of monthlyNutrienData | keyvalue">
+          <h3 matLine>{{ nutrien.value.label }}</h3>
+          <p>{{ nutrien.value.quantity | number: "1.0-0" }} in {{ nutrien.value.unit }}</p>
         </mat-list-item>
       </mat-list>
     </mat-card-content>

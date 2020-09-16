@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddMealDialogComponent } from '../add-meal-dialog/add-meal-dialog.component';
 import { FoodDbService } from '../services/food-db.service';
 import { LocalstorageCrudService } from '../services/localstorage-crud.service';
+import { PlanMealsService } from '../services/plan-meals.service'
 
 @Component({
   selector: 'app-calculate-meals',
@@ -15,11 +16,19 @@ export class CalculateMealsComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public foodDb: FoodDbService,
-    public localStorage: LocalstorageCrudService
+    public localStorage: LocalstorageCrudService,
+    public planMeals: PlanMealsService
   ) {}
 
   ngOnInit(): void {
-    this.meals = this.localStorage.meals;
+    this.meals = this.planMeals.getMeals();
+  }
+  save(): void {
+    this.localStorage.update(this.meals);
+  }
+
+  delete(item, mealId):void {
+    this.planMeals.deleteItem(item, mealId)
   }
 
   openDialog(id): void {
@@ -29,13 +38,5 @@ export class CalculateMealsComponent implements OnInit {
       width: '90%',
     });
     dialogRef.afterClosed().subscribe();
-  }
-
-  save(): void {
-    this.localStorage.update(this.meals);
-  }
-
-  delete(item, mealId):void {
-    this.localStorage.deleteItem(item, mealId)
   }
 }
