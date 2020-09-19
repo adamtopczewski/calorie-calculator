@@ -37,5 +37,5 @@ Lastly users can calculate daily calories intake based on their input.
 
 # Credits
 
-Forumula for calculating daily intake: https://www.calculator.net/calorie-calculator.html
-Code-reviews thanks to discord community: https://typeofweb.com/polski-frontend-discord/
+- Forumula for calculating daily intake: https://www.calculator.net/calorie-calculator.html
+- Code-reviews thanks to discord community: https://typeofweb.com/polski-frontend-discord/
