@@ -19,7 +19,7 @@ Lastly users can calculate daily calories intake based on their input.
 - Angular Material
 - Netlify (hosting demo)
 - Edamam API
-- LocalStorage API(mock server)
+- LocalStorage API (mock server)
 
 # Things to be done
 - reworking mat dialog to be RWD
