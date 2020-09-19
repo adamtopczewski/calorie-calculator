@@ -29,7 +29,7 @@ Lastly users can calculate daily calories intake based on their input.
 
 
 # Notes 
-- Edamam free plan allows only for 10 request per minute
+Edamam free plan allows only for 10 request per minute
 
 
 # Known issues
