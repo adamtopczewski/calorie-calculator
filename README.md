@@ -33,7 +33,7 @@ Lastly users can calculate daily calories intake based on their input.
 
 
 # Known issues
-- mat-expansion-panel compatibility https://github.com/angular/components/issues/11765
+Mat-expansion-panel compatibility https://github.com/angular/components/issues/11765
 
 # Credits
 
