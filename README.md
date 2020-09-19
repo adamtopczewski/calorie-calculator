@@ -2,13 +2,14 @@
 
 ![CalorieCalculator Demo](demo/calorie-calc-addingItem.gif)
 
-**Calories counting app inspired by Fitatu.**
-
 # Demo
 
 https://calorie-calculator.netlify.app/
 
 # About
+
+**Calories counting app inspired by Fitatu.**
+
 App was made using Edamam @ https://www.edamam.com/ and Angular Material @https://material.angular.io/ components.
 Users can add food to list of meals, and application will count calories and basic macronutriens.
 Additionaly app stores up to 30 entries into the local storage using it as a CRUD service. That functionality is used to mock client-server communication.
