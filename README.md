@@ -22,12 +22,6 @@ Lastly users can calculate daily calories intake based on their input.
 - Edamam API
 - LocalStorage API (mock server)
 
-# Things to be done
-- reworking mat dialog to be RWD
-- catching errors
-- write tests
-- add more types
-
 
 # Notes 
 Edamam free plan allows only for 10 request per minute
