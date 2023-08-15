@@ -12,7 +12,7 @@ https://calorie-calculator.netlify.app/
 
 App was made using Edamam @ https://www.edamam.com/ and Angular Material @https://material.angular.io/ components.
 Users can add food to list of meals, and application will count calories and basic macronutriens.
-Additionaly app stores up to 30 entries into the local storage using it as a CRUD service. That functionality is used to mock client-server communication.
+Additionaly app stores up to 30 entries into the local storage. That functionality is used to mock client-server communication.
 Lastly users can calculate daily calories intake based on their input.
 
 # Technologies
